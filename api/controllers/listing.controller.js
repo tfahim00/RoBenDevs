@@ -69,21 +69,8 @@ export const getListings = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
-    let offer = req.query.offer;
 
-    if (offer === 'true') {
-      offer = true;
-    } else if (offer === 'false') {
-      offer = { $in: [false, true] };
-    } else {
-      offer = { $in: [false, true] }; // Default to include both offer and non-offer listings
-    }
-
-    let condition = req.query.condition;
-
-    if (condition === undefined || condition === 'all') {
-      condition = { $in: ['new', 'used'] };
-    }
+    
 
     const searchTerm = req.query.searchTerm || '';
     const category = req.query.category || '';
@@ -94,8 +81,6 @@ export const getListings = async (req, res, next) => {
     // Construct query based on category
     const query = {
       name: { $regex: searchTerm, $options: 'i' },
-      offer,
-      condition,
     };
 
     if (category) {

@@ -1,57 +1,33 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import SwiperCore from 'swiper';
-import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
 
 export default function Home() {
-  const [bookListings, setBookListings] = useState([]);
-  const [electronicsListings, setElectronicsListings] = useState([]);
-  const [furnitureListings, setFurnitureListings] = useState([]);
-  const [bookOfferListings, setBookOfferListings] = useState([]);
-  const [electronicsOfferListings, setElectronicsOfferListings] = useState([]);
-  const [furnitureOfferListings, setFurnitureOfferListings] = useState([]);
-  
-  SwiperCore.use([Navigation]);
+  const [banglaListings, setBanglaListings] = useState([]);
+  const [chineseListings, setChineseListings] = useState([]);
+  const [koreanListings, setKoreanListings] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data for books
-        const bookRes = await fetch('/api/listing/get?category=books&limit=4');
-        const bookData = await bookRes.json();
-        console.log("Book Data:", bookData);
+        // Fetch data for bangla food
+        const banglaRes = await fetch('/api/listing/get?category=bangla&limit=4');
+        const banglaData = await banglaRes.json();
+        console.log("Book Data:", banglaData);
 
-        setBookListings(bookData);
+        setBanglaListings(banglaData);
 
-        // Fetch data for electronics
-        const electronicsRes = await fetch('/api/listing/get?category=electronics&limit=4');
-        const electronicsData = await electronicsRes.json();
-        console.log("Electronics Data:", electronicsData);
+        // Fetch data for chinese food
+        const chineseRes = await fetch('/api/listing/get?category=chinese&limit=4');
+        const chineseData = await chineseRes.json();
+        console.log("Chinese Data:", chineseData);
 
-        setElectronicsListings(electronicsData);
+        setChineseListings(chineseData);
 
-        // Fetch data for furniture
-        const furnitureRes = await fetch('/api/listing/get?category=furniture&limit=4');
-        const furnitureData = await furnitureRes.json();
-        setFurnitureListings(furnitureData);
-
-        // Fetch offer listings for books
-        const bookOfferRes = await fetch('/api/listing/get?category=books&offer=true&limit=4');
-        const bookOfferData = await bookOfferRes.json();
-        setBookOfferListings(bookOfferData);
-
-        // Fetch offer listings for electronics
-        const electronicsOfferRes = await fetch('/api/listing/get?category=electronics&offer=true&limit=4');
-        const electronicsOfferData = await electronicsOfferRes.json();
-        setElectronicsOfferListings(electronicsOfferData);
-
-        // Fetch offer listings for furniture
-        const furnitureOfferRes = await fetch('/api/listing/get?category=furniture&offer=true&limit=4');
-        const furnitureOfferData = await furnitureOfferRes.json();
-        setFurnitureOfferListings(furnitureOfferData);
+        // Fetch data for korean food
+        const koreanRes = await fetch('/api/listing/get?category=korean&limit=4');
+        const koreanData = await koreanRes.json();
+        setKoreanListings(koreanData);
       } catch (error) {
         console.log(error);
       }
@@ -62,45 +38,17 @@ export default function Home() {
   return (
     <div>
 
-      {/* Offer Listings for Books */}
+      {/* Listings for bangla food */}
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-        {bookOfferListings && bookOfferListings.length > 0 && (
+        {banglaListings && banglaListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>
-                Offers for Books
+                Bangla Food
               </h2>
-              <Link
-                className='text-sm text-blue-800 hover:underline'
-                to={'/search?offer=true&type=book'}
-              >
-                See more offers
-              </Link>
             </div>
             <div className='flex flex-wrap gap-4'>
-              {bookOfferListings.map(listing => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Sale Listings for Books */}
-        {bookListings && bookListings.length > 0 && (
-          <div className=''>
-            <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>
-                Books for Sale
-              </h2>
-              <Link
-                className='text-sm text-blue-800 hover:underline'
-                to={'/search?'}
-              >
-                See more books
-              </Link>
-            </div>
-            <div className='flex flex-wrap gap-4'>
-              {bookListings.map(listing => (
+              {banglaListings.map(listing => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
@@ -110,45 +58,17 @@ export default function Home() {
 
       
 
-      {/* Offer Listings for Electronics */}
+      {/* Offer Listings for chinese food */}
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-        {electronicsOfferListings && electronicsOfferListings.length > 0 && (
+        {chineseListings && chineseListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>
-                Offers for Electronics
+                Chinese Food
               </h2>
-              <Link
-                className='text-sm text-blue-800 hover:underline'
-                to={'/search?offer=true&type=electronics'}
-              >
-                See more offers
-              </Link>
             </div>
             <div className='flex flex-wrap gap-4'>
-              {electronicsOfferListings.map(listing => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Sale Listings for Electronics */}
-        {electronicsListings && electronicsListings.length > 0 && (
-          <div className=''>
-            <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>
-                Electronics for Sale
-              </h2>
-              <Link
-                className='text-sm text-blue-800 hover:underline'
-                to={'/search?type=electronics'}
-              >
-                See more electronics
-              </Link>
-            </div>
-            <div className='flex flex-wrap gap-4'>
-              {electronicsListings.map(listing => (
+              {chineseListings.map(listing => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>
@@ -158,45 +78,17 @@ export default function Home() {
 
       
 
-      {/* Offer Listings for Furniture */}
+      {/* Offer Listings for korean food */}
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
-        {furnitureOfferListings && furnitureOfferListings.length > 0 && (
+        {koreanListings && koreanListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>
-                Offers for Furniture
+                Korean Food
               </h2>
-              <Link
-                className='text-sm text-blue-800 hover:underline'
-                to={'/search?offer=true&type=furniture'}
-              >
-                See more offers
-              </Link>
             </div>
             <div className='flex flex-wrap gap-4'>
-              {furnitureOfferListings.map(listing => (
-                <ListingItem listing={listing} key={listing._id} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Sale Listings for Furniture */}
-        {furnitureListings && furnitureListings.length > 0 && (
-          <div className=''>
-            <div className='my-3'>
-              <h2 className='text-2xl font-semibold text-slate-600'>
-                Furniture for Sale
-              </h2>
-              <Link
-                className='text-sm text-blue-800 hover:underline'
-                to={'/search?type=sale'}
-              >
-                See more furniture
-              </Link>
-            </div>
-            <div className='flex flex-wrap gap-4'>
-              {furnitureListings.map(listing => (
+              {koreanListings.map(listing => (
                 <ListingItem listing={listing} key={listing._id} />
               ))}
             </div>

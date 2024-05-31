@@ -1,7 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import AdminSignIn from './pages/AdminSignIn';
-import EmployeeSignIn from './pages/EmployeeSignIn';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
@@ -18,8 +16,6 @@ export default function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/admin-sign-in' element={<AdminSignIn />} />
-        <Route path='/employee-sign-in' element={<EmployeeSignIn />} />
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/listing/:listingId' element={<Listing />} />

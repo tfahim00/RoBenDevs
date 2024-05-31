@@ -64,14 +64,15 @@ export const getUserListings = async (req, res, next) => {
 };
 
 export const getUser = async (req, res, next) => {
+  const { email, password, role } = req.body;
   try {
+    const user = await User.findOne({ email, role });
+    if (!user) return next(errorHandler(404, 'User not found or role mismatch!'));
     
-    const user = await User.findById(req.params.id);
-  
-    if (!user) return next(errorHandler(404, 'User not found!'));
-  
+    const validPassword = bcryptjs.compareSync(password, user.password);
+    if (!validPassword) return next(errorHandler(401, 'Wrong credentials!'));
+    
     const { password: pass, ...rest } = user._doc;
-  
     res.status(200).json(rest);
   } catch (error) {
     next(error);
